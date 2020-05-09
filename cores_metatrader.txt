@@ -1,0 +1,27 @@
+Texto: White, Fundo: 37,36,53
+
+Texto selecionado: White, Fundo: 17,16,24
+
+Recuo: White, Fundo: 33,32,47
+
+Palavra-chave: Pink
+
+Comentários: 94,90,135
+
+Números: Turquoise
+
+Operadores: Violet
+
+Strings: Khaki
+
+Macros: Chocolate
+
+Funções: GreenYellow
+
+Indicadores: SeaGreen
+
+Variáveis pré-definidas: DeepPink
+
+Variáveis de entrada: Yellow
+
+ASCII: DeepPink
