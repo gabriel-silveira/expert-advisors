@@ -5,9 +5,9 @@ void drawVerticalLine(string label, double firstValue, double secondValue, color
   string lineName = 
     label + 
     " (" 
-    + NormalizeDouble(firstValue, 1) 
+    + DoubleToString(NormalizeDouble(firstValue, 1))
     + ", " 
-    + NormalizeDouble(secondValue, 1) 
+    + DoubleToString(NormalizeDouble(secondValue, 1))
     + ")";
 
   ObjectCreate(0, lineName, OBJ_VLINE, 0, candle1.getTime(), 0);
