@@ -23,11 +23,14 @@ double          iEMABuffer[];
 int             handleEMA;
 
 
-void initCrossingMAs() {
+void InitCrossingMAs(
+  int simplePeriods,
+  int exponentialPeriods
+) {
 
-  initAMA();
+  InitAMA(simplePeriods);
   
-  initEMA();
+  InitEMA(exponentialPeriods);
 }
 
 
@@ -38,8 +41,6 @@ bool crossingUp() {
        iAMABuffer[0] < iEMABuffer[0]
     && iAMABuffer[1] > iEMABuffer[1]
   ) {
-  
-    drawVerticalLine("Cruzamento para cima", iAMABuffer[0], iEMABuffer[0], clrSpringGreen);
     
     return true;
   }
@@ -56,8 +57,6 @@ bool crossingDown() {
        iAMABuffer[0] > iEMABuffer[0]
     && iAMABuffer[1] < iEMABuffer[1]
   ) {
-  
-    drawVerticalLine("Cruzamento para baixo", iAMABuffer[0], iEMABuffer[0], clrFuchsia);
     
     return true;
   }
@@ -67,40 +66,50 @@ bool crossingDown() {
 
 
 
-void initAMA() {
+void InitAMA(int simplePeriods) {
 
-  SetIndexBuffer(0, iAMABuffer, INDICATOR_DATA);
-  PlotIndexGetInteger(0, PLOT_LINE_COLOR, clrFuchsia);
-  PlotIndexGetInteger(0, PLOT_LINE_WIDTH, 2);
+  SetIndexBuffer      (0, iAMABuffer, INDICATOR_DATA);
+  PlotIndexGetInteger (0, PLOT_LINE_COLOR, clrFuchsia);
+  PlotIndexGetInteger (0, PLOT_LINE_WIDTH, 2);
   
-  handleAMA = iMA(symbolName, PERIOD_CURRENT, 21, 0, MODE_SMA, PRICE_CLOSE);
+  handleAMA = iMA(symbolName, PERIOD_CURRENT, simplePeriods, 0, MODE_SMA, PRICE_CLOSE);
 }
 
 
 
-void initEMA() {
+void InitEMA(int exponentialPeriods) {
 
-  SetIndexBuffer(0, iEMABuffer, INDICATOR_DATA);
-  PlotIndexGetInteger(0, PLOT_LINE_COLOR, clrSpringGreen);
-  PlotIndexGetInteger(0, PLOT_LINE_WIDTH, 2);
+  SetIndexBuffer      (0, iEMABuffer, INDICATOR_DATA);
+  PlotIndexGetInteger (0, PLOT_LINE_COLOR, clrSpringGreen);
+  PlotIndexGetInteger (0, PLOT_LINE_WIDTH, 2);
   
-  handleEMA = iMA(symbolName, PERIOD_CURRENT, 8, 0, MODE_EMA, PRICE_CLOSE);
+  handleEMA = iMA(symbolName, PERIOD_CURRENT, exponentialPeriods, 0, MODE_EMA, PRICE_CLOSE);
 }
 
 
-void CopyCrossingMAsBuffers() {
+void CopyAMABuffer() {
 
   //+------------------------------------------------------------------+
   //| iAMA                                                             |
   //+------------------------------------------------------------------+
   CopyBuffer(handleAMA, 0, 0, 5, iAMABuffer);
   ArraySetAsSeries(iAMABuffer, true);
-  
+}
+
+void CopyEMABuffer() {
+
   //+------------------------------------------------------------------+
   //| iEMA                                                             |
   //+------------------------------------------------------------------+
   CopyBuffer(handleEMA, 0, 0, 5, iEMABuffer);
   ArraySetAsSeries(iEMABuffer, true);
+}
+
+void CopyCrossingMAsBuffers() {
+  
+  CopyAMABuffer();
+  
+  CopyEMABuffer();
 }
 
 
