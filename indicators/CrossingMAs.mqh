@@ -36,6 +36,10 @@ void InitCrossingMAs(
 
 bool crossingUp() {
 
+  Print(iAMABuffer[0], " < ", iEMABuffer[0]);
+  Print(iAMABuffer[1], " > ", iEMABuffer[1]);
+  Print("");
+
   // EMA 8 > AMA 21
   if (
        iAMABuffer[0] < iEMABuffer[0]
@@ -51,6 +55,10 @@ bool crossingUp() {
 
 
 bool crossingDown() {
+
+  Print(iAMABuffer[0], " > ", iEMABuffer[0]);
+  Print(iAMABuffer[1], " < ", iEMABuffer[1]);
+  Print("");
 
   // EMA 8 < AMA 21
   if (

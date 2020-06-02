@@ -38,7 +38,14 @@ double getCurrentBalance() {
 
 bool isEnoughForToday(double balance) {
 
-  return balance >= profitLimit || balance < (lossLimit * -1);
+  if (balance >= profitLimit || balance < (lossLimit * -1)) {
+      
+    PlaySound("alert.wav");
+    
+    return true;
+  }
+
+  return false;
 }
 
 
