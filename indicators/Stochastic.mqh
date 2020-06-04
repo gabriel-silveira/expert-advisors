@@ -15,12 +15,12 @@ double    SignalBuffer[];
 
 int       handleStoch;
 
-void InitStochastic(int k, int d, int slowing) {
+void InitStochastic(int pK, int pD, int pSlowing) {
 
   SetIndexBuffer(0, StochasticBuffer, INDICATOR_DATA);
   SetIndexBuffer(1, SignalBuffer, INDICATOR_DATA);
   
-  handleStoch = iStochastic(_Symbol, PERIOD_CURRENT, 5, 3, 3, MODE_SMA, STO_LOWHIGH);
+  handleStoch = iStochastic(_Symbol, PERIOD_CURRENT, pK, pD, pSlowing, MODE_SMA, STO_LOWHIGH);
 }
 
 void CopyStochasticBuffers() {
