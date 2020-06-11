@@ -40,7 +40,7 @@ bool isEnoughForToday(double balance) {
 
   if (balance >= profitLimit || balance < (lossLimit * -1)) {
       
-    PlaySound("alert.wav");
+    // PlaySound("alert.wav");
     
     return true;
   }

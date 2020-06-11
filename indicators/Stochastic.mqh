@@ -27,5 +27,9 @@ void CopyStochasticBuffers() {
 
   CopyBuffer(handleStoch, MAIN_LINE, 0, 5, StochasticBuffer);
   
+  ArraySetAsSeries(StochasticBuffer, true);
+  
   CopyBuffer(handleStoch, SIGNAL_LINE, 0, 5, SignalBuffer);
+  
+  ArraySetAsSeries(SignalBuffer, true);
 }

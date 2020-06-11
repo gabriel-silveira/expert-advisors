@@ -33,4 +33,6 @@ void InitRSI(int rsi_period) {
 void CopyRSIBuffers() {
 
   CopyBuffer(handleRSI, 0, 0, 5, iRSIBuffer);
+  
+  ArraySetAsSeries(iRSIBuffer, true);
 }
