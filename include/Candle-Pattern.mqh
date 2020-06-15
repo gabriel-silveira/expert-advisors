@@ -5,6 +5,8 @@ class CandlePattern : public Candle {
 
   private:
   
+    double mrbz;
+  
     Candle c0;
     Candle c1;
     Candle c2;
@@ -13,7 +15,7 @@ class CandlePattern : public Candle {
     
   public:
   
-    CandlePattern(void);
+    CandlePattern(double mrbzHeight);
     
     void PrintPatternName(string name);
     
@@ -45,18 +47,13 @@ class CandlePattern : public Candle {
     bool isUpSoldiers(void);
     
     bool isBullishAbandonedBaby(void);
-    
-    bool isDownwardReversal(void);
-    
-    bool isUpwardContinuation(void);
 };
 
 
 
-CandlePattern::CandlePattern(void) {
+CandlePattern::CandlePattern(double mrbzHeight) {
   
-  // marobozu de mini dolar
-  int mrbz = 6;
+  mrbz = mrbzHeight;
   
   c0 = new Candle(0, mrbz);
   c1 = new Candle(1, mrbz);
@@ -79,11 +76,11 @@ bool CandlePattern::isUpperDragonfly(
   double iEMA1
 ) {
   if (
-    c1.getHeight() < 1
+    c1.getHeight() < (mrbz / 6)
     &&
     c1.getUpperShadow() == 0
     &&
-    c1.getLowerShadow() >= 3
+    c1.getLowerShadow() >= (mrbz / 2)
     &&
     c1.getClose() > iEMA1
   ) {
@@ -101,7 +98,7 @@ bool CandlePattern::isBearishEngulfing(
   if (
     c2.isBullish()
     &&
-    c2.getHeight() >= 2
+    c2.getHeight() >= (mrbz / 3)
     &&
     c2.getClose() > iEMA1
     
@@ -131,7 +128,7 @@ bool CandlePattern::isMorningStar(
   if (
     c3.isBearish()
     &&
-    c3.getHeight() > 2
+    c3.getHeight() > (mrbz / 3)
     && 
     c3.getClose() < iEMA1
     
@@ -143,7 +140,7 @@ bool CandlePattern::isMorningStar(
     && 
     c1.isBullish()
     &&
-    c1.getHeight() > 2
+    c1.getHeight() > (mrbz / 3)
     &&
     c1.getHeight() < c3.getHeight()
   ) {
@@ -161,7 +158,7 @@ bool CandlePattern::isEveningStar(
   if (
     c3.isBullish()
     &&
-    c3.getHeight() > 2
+    c3.getHeight() > (mrbz / 3)
     && 
     c3.getClose() > iEMA1
     
@@ -173,9 +170,11 @@ bool CandlePattern::isEveningStar(
     && 
     c1.isBearish()
     &&
-    c1.getHeight() > 2
+    c1.getHeight() > (mrbz / 3)
     &&
     c1.getHeight() < c3.getHeight()
+    && 
+    c1.getClose() > iEMA1
   ) {
     PrintPatternName("EVENING STAR");
     return true;
@@ -190,11 +189,11 @@ bool CandlePattern::isShuttingStar(
   double iEMA1
 ) {
   if (
-    c1.getHeight() < 1
+    c1.getHeight() < (mrbz / 6)
     &&
-    c1.getUpperShadow() > 3
+    c1.getUpperShadow() > (mrbz / 2)
     &&
-    c1.getLowerShadow() < 1
+    c1.getLowerShadow() < (mrbz / 6)
     && 
     c1.getClose() > iEMA1
   ) {
@@ -216,7 +215,7 @@ bool CandlePattern::isBearishGravestone(
     &&
     c1.getHeight() == 0
     &&
-    c1.getUpperShadow() >= 3
+    c1.getUpperShadow() >= (mrbz / 2)
     &&
     c1.getLowerShadow() == 0
     && 
@@ -234,11 +233,11 @@ bool CandlePattern::isBearishGravestone(
 bool CandlePattern::isUpSoldiers() {
   
   if (
-    c1.isBullish() && c1.getHeight() >= 3
+    c1.isBullish() && c1.getHeight() >= (mrbz / 2)
     &&
-    c2.isBullish() && c2.getHeight() >= 3
+    c2.isBullish() && c2.getHeight() >= (mrbz / 2)
     &&
-    c3.isBullish() && c3.getHeight() >= 3
+    c3.isBullish() && c3.getHeight() >= (mrbz / 2)
   ) {
   
     return true;
@@ -252,11 +251,11 @@ bool CandlePattern::isUpSoldiers() {
 bool CandlePattern::isBullishAbandonedBaby() {
   
   if (
-    c1.isBullish() && c1.getHeight() > 3
+    c1.isBullish() && c1.getHeight() > (mrbz / 2)
     &&
     c2.getHeight() == 0
     &&
-    c3.isBearish() && c3.getHeight() > 3
+    c3.isBearish() && c3.getHeight() > (mrbz / 2)
   ) {
   
     return true;
@@ -265,59 +264,3 @@ bool CandlePattern::isBullishAbandonedBaby() {
   return false;
 }
 
-
-
-bool CandlePattern::isDownwardReversal() {
-  
-  if (
-    c1.getHeight() > 0
-    &&
-    c1.getHeight() < 2
-    &&
-    c1.getUpperShadow() >= (c1.getHeight() * 2)
-    &&
-    c1.getLowerShadow() < 1
-    
-    &&
-    c2.getHeight() > 2
-    &&
-    c2.getOpen() < c1.getOpen()
-    &&
-    c2.getClose() <= c1.getOpen()
-    
-    &&
-    c2.getHigh() < c0.getOpen()
-    &&
-    c3.getHigh() < c0.getOpen()
-  ) {
-    
-    return true;
-  }
-  
-  return false;
-}
-
-
-
-bool CandlePattern::isUpwardContinuation() {
-
-  if (
-    c1.getHeight() > 0 && c1.getHeight() < 2
-    &&
-    c1.getUpperShadow() > c1.getHeight() && c1.getLowerShadow() > c1.getHeight()
-    &&
-    c1.getUpperShadow() < 4
-    &&
-    c2.isBullish() && c2.getHeight() >= 2 && c2.getHeight() < 5
-    &&
-    c3.isBullish() && c3.getHeight() >= 2
-    &&
-    c4.getOpen() < c1.getOpen()
-  ) {
-    
-    return true;
-    
-  }
-  
-  return false;
-}
