@@ -5,6 +5,19 @@ double  previousBalance   = 0;
 double  currentPrice;
 
 
+bool workTime() {
+      
+  MqlDateTime structNow;
+  
+  TimeToStruct(TimeCurrent(), structNow);
+  
+  if (
+    (structNow.hour >= hourToStart && structNow.hour < hourToFinish)
+  ) return true;
+  
+  return false;
+}
+
 
 bool restrictHours() {
       
