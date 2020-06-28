@@ -80,7 +80,7 @@ void InitAMA(int simplePeriods) {
   PlotIndexGetInteger (0, PLOT_LINE_COLOR, clrFuchsia);
   PlotIndexGetInteger (0, PLOT_LINE_WIDTH, 2);
   
-  handleAMA = iMA(symbolName, PERIOD_CURRENT, simplePeriods, 0, MODE_SMA, PRICE_CLOSE);
+  handleAMA = iMA(_Symbol, PERIOD_CURRENT, simplePeriods, 0, MODE_SMA, PRICE_CLOSE);
 }
 
 
@@ -91,26 +91,27 @@ void InitEMA(int exponentialPeriods) {
   PlotIndexGetInteger (0, PLOT_LINE_COLOR, clrSpringGreen);
   PlotIndexGetInteger (0, PLOT_LINE_WIDTH, 2);
   
-  handleEMA = iMA(symbolName, PERIOD_CURRENT, exponentialPeriods, 0, MODE_EMA, PRICE_CLOSE);
+  handleEMA = iMA(_Symbol, PERIOD_CURRENT, exponentialPeriods, 0, MODE_EMA, PRICE_CLOSE);
 }
 
 
-void CopyAMABuffer() {
+bool CopyAMABuffer() {
 
-  //+------------------------------------------------------------------+
-  //| iAMA                                                             |
-  //+------------------------------------------------------------------+
-  CopyBuffer(handleAMA, 0, 0, 5, iAMABuffer);
+  CopyBuffer(handleAMA, 0, 0, 10, iAMABuffer);
   ArraySetAsSeries(iAMABuffer, true);
+  
+  return true;
 }
 
-void CopyEMABuffer() {
+bool CopyEMABuffer() {
 
   //+------------------------------------------------------------------+
   //| iEMA                                                             |
   //+------------------------------------------------------------------+
-  CopyBuffer(handleEMA, 0, 0, 5, iEMABuffer);
+  CopyBuffer(handleEMA, 0, 0, 10, iEMABuffer);
   ArraySetAsSeries(iEMABuffer, true);
+  
+  return true;
 }
 
 void CopyCrossingMAsBuffers() {

@@ -5,37 +5,6 @@ double  previousBalance   = 0;
 double  currentPrice;
 
 
-bool workTime() {
-      
-  MqlDateTime structNow;
-  
-  TimeToStruct(TimeCurrent(), structNow);
-  
-  if (
-    (structNow.hour >= hourToStart && structNow.hour < hourToFinish)
-  ) return true;
-  
-  return false;
-}
-
-
-bool restrictHours() {
-      
-  MqlDateTime structNow;
-  
-  TimeToStruct(TimeCurrent(), structNow);
-
-  if (restrictedHours) {
-  
-    if (structNow.hour < hourToStart) return true;
-    
-    if (structNow.hour > hourToFinish) return true;
-  }
-  
-  return false;
-}
-
-
 
 double getCurrentBalance() {
 
@@ -49,16 +18,11 @@ double getCurrentBalance() {
 
 
 
-bool isEnoughForToday(double balance) {
+bool isEnoughForToday() {
 
-  if (balance >= profitLimit || balance < (lossLimit * -1)) {
-      
-    // PlaySound("alert.wav");
-    
-    return true;
-  }
-
-  return false;
+  double balance = getCurrentBalance();
+  
+  return balance >= profitLimit || balance < (lossLimit * -1);
 }
 
 
